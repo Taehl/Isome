@@ -72,7 +72,7 @@ end
 
 function editor.draw()
 	love.graphics.print("editor", 750, 16)
-	love.graphics.draw(graphics.tiles[mouse.i], 800, 600, 0, 4, 4, 32, 32)
+	--love.graphics.draw(graphics.tiles[mouse.i], 800, 600, 0, 4, 4, 32, 32)
 	
 	-- Cory's GUI Menu
 	if editor.menuopen then
@@ -117,7 +117,7 @@ function editor.drawcursor()
 	love.graphics.print(mouse.z..", "..mouse.x..", "..mouse.y, 8, 46)
 	
 	love.graphics.setColor(255, 255, 255, 192)
-	love.graphics.draw(graphics.tiles[mouse.i], rx-cam.x, ry-cam.y, 0, 1, 1, 16, 16)
+	love.graphics.drawq(graphics.tiles, quads.tiles[mouse.i], rx-cam.x, ry-cam.y, 0, 1, 1, 16, 16)
 	love.graphics.setColor( 0, 0, 255-math.mod(love.timer.getTime()*300, 255), 63 )
 	love.graphics.draw(graphics.editor.blanktile, rx-cam.x, ry-cam.y, 0, 1, 1, 16, 16)
 	love.graphics.setColor(r, g, b, a)

@@ -5,6 +5,8 @@ client = {}
 function client.load()
 	cam = { x=0, y=0 }
 	player = {z=2, x=13, y=32}
+	
+	client.maketerrain()
 end
 
 function client.keypressed(k)
@@ -32,33 +34,12 @@ function client.draw()
 	
 	local cgx, cgy = isoscreen(cam.x+400, cam.y+300, 1)
 	
-	-- draw tiles
-	-- todo: utilize better iterator
-	local drewcursor = true
-	if editor then drewcursor = editor.menuopen end
+	--local drewcursor = true
+	--if editor then drewcursor = editor.menuopen end
 	
-	for z, layer in kpairs(tiles) do
-		-- change color based on relative depth if viewing by layers
-		if editor then if editor.layerview then
-			if z < mouse.z then love.graphics.setColor(255, 127, 127, 255)
-			elseif z > mouse.z then love.graphics.setColor(127, 255, 127, 63)
-			else love.graphics.setColor(255, 255, 255, 255)
-			end
-		end end
-		for x, row in kpairs(layer) do if x > cgx-30 and x < cgx+30 then
-			for y, t in kpairs(row) do if y > cgy-30 and y < cgy+30 then
-				
-				local rx, ry = isogrid(z, x, y)
-				love.graphics.draw(graphics.tiles[t.i], rx-cam.x, ry-cam.y, 0, 1, 1, 16, 16)				
-				
-				if (z >= mouse.z) and (x >= mouse.x) and (y >= mouse.y) and not drewcursor then
-					editor.drawcursor()
-					drewcursor = true
-				end
-			end end
-		end end
-	end
-	love.graphics.setColor(255, 255, 255, 255)
+	
+	--love.graphics.setColor(255, 255, 255, 255)
+	love.graphics.draw(terrain, -cam.x, -cam.y, 0, 1, 1, 0, 0)
 	if not drewcursor then editor.drawcursor() end
 	
 	-- player
@@ -71,4 +52,29 @@ function client.unload()
 	
 	package.loaded.client = nil
 	client = nil
+end
+
+function client.maketerrain()
+	terrain:clear()
+	for z, layer in kpairs(tiles) do
+		-- change color based on relative depth if viewing by layers
+		if editor then if editor.layerview then
+			if z < mouse.z then love.graphics.setColor(255, 127, 127, 255)
+			elseif z > mouse.z then love.graphics.setColor(127, 255, 127, 63)
+			else love.graphics.setColor(255, 255, 255, 255)
+			end
+		end end
+		for x, row in kpairs(layer) do
+			for y, t in kpairs(row) do
+				
+				local rx, ry = isogrid(z, x, y)			
+				terrain:addq(quads.tiles[t.i], rx, ry, 0, 1, 1, 16, 16)
+				
+				--if (z >= mouse.z) and (x >= mouse.x) and (y >= mouse.y) and not drewcursor then
+				--	editor.drawcursor()
+				--	drewcursor = true
+				--end
+			end
+		end
+	end
 end

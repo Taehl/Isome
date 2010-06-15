@@ -15,10 +15,10 @@ function server.load()
 	newtile(2, 13, 31, 2)
 	newtile(3, 13, 31, 2)
 	--]]
-	for x=0,100 do
-		for y=0,100 do
-			local z = math.random(2,3)
-			newtile(1, x, y, z)
+	for x=0,500 do
+		for y=0,500 do
+			local i = math.random(2,3)
+			newtile(1, x, y, i, true)
 		end
 	end
 end

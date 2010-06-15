@@ -8,7 +8,6 @@ function love.load()
 	require("client")
 	require("server")
 	require("editor")
-	if server then server.load() end
 	
 	-- Returns 'n' rounded to the nearest 'deci'th
 	function math.round(n, deci) deci = 10^(deci or 0) return math.floor(n*deci+.5)/deci end
@@ -19,14 +18,25 @@ function love.load()
 		return iter
 	end
 
-	graphics = { tiles = {
-			love.graphics.newImage("tile1.png"),
-			love.graphics.newImage("tile2.png"),
-			love.graphics.newImage("tile3.png"),
-		},
+	graphics = { --tiles = {
+	--		love.graphics.newImage("tile1.png"),
+	--		love.graphics.newImage("tile2.png"),
+	--		love.graphics.newImage("tile3.png"),
+	--	},
+		tiles = love.graphics.newImage("tiles.png"),
 		player = love.graphics.newImage("player.png"),
 	}
+	quads = {
+		tiles = {
+			love.graphics.newQuad(0, 0, 32, 32, 64, 64),
+			love.graphics.newQuad(32, 0, 32, 32, 64, 64),
+			love.graphics.newQuad(0, 32, 32, 32, 64, 64),
+		},
+	}
 	
+	terrain = love.graphics.newSpriteBatch(graphics.tiles, 8192000)
+	
+	if server then server.load() end
 	if client then client.load() end
 	if editor then editor.load() end
 end
@@ -90,10 +100,13 @@ end
 -- tile functions
 
 -- add a tile
-function newtile(z, x, y, i)
+function newtile(z, x, y, i, nomake)
 	local t = {}
 	t.i = i
+	
 	if not tiles[z] then tiles[z] = {} end
 	if not tiles[z][x] then tiles[z][x] = {} end
 	tiles[z][x][y] = t
+	
+	if client and not nomake then client.maketerrain() end
 end
