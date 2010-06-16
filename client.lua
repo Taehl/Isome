@@ -3,8 +3,8 @@
 client = {}
 
 function client.load()
-	cam = { x=0, y=0 }
-	player = {z=2, x=13, y=32}
+	cam = { x=-400, y=-150 }
+	player = {z=2, x=10, y=10}
 	
 	client.maketerrain()
 end
@@ -31,8 +31,6 @@ end
 function client.draw()
 	love.graphics.print("client", 750, 26)
 	love.graphics.print(cam.x..", "..cam.y, 8, 26)
-	
-	local cgx, cgy = isoscreen(cam.x+400, cam.y+300, 1)
 	
 	--local drewcursor = true
 	--if editor then drewcursor = editor.menuopen end
