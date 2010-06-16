@@ -88,7 +88,6 @@ function isogrid(z, x, y)
 end
 
 -- Convert screen coordinates to grid coordinates
--- todo: fix the whole z-creep thing...
 function isoscreen(x, y, z)
 	local a = 7/15
 	y = y - 2*z

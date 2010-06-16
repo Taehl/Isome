@@ -41,8 +41,8 @@ end
 
 function editor.mousepressed(x, y, button)
 	-- scroll through tiles
-    if button == "wu" then mouse.i = (mouse.i > 1) and mouse.i-1 or #graphics.tiles
-    elseif button == "wd" then mouse.i = (mouse.i < #graphics.tiles) and mouse.i+1 or 1
+    if button == "wu" then mouse.i = (mouse.i > 1) and mouse.i-1 or #quads.tiles
+    elseif button == "wd" then mouse.i = (mouse.i < #quads.tiles) and mouse.i+1 or 1
 	end
 end
 
@@ -63,16 +63,21 @@ function editor.update(dt)
 	
 	-- place/remove tiles
 	if not editor.menuopen then
-		if love.mouse.isDown("l") then newtile(mouse.z, mouse.x, mouse.y, mouse.i)
+		if love.mouse.isDown("l") then
+			if tiles[mouse.z] then if tiles[mouse.z][mouse.x] then if tiles[mouse.z][mouse.x][mouse.y] then
+				if tiles[mouse.z][mouse.x][mouse.y].i == mouse.i then return end
+			end end end
+			newtile(mouse.z, mouse.x, mouse.y, mouse.i)
 		elseif love.mouse.isDown("r") then if tiles[mouse.z] then if tiles[mouse.z][mouse.x] then
 			tiles[mouse.z][mouse.x][mouse.y] = nil
+			if client then client.maketerrain() end
 		end end end
 	end
 end
 
 function editor.draw()
 	love.graphics.print("editor", 750, 16)
-	--love.graphics.draw(graphics.tiles[mouse.i], 800, 600, 0, 4, 4, 32, 32)
+	love.graphics.drawq(graphics.tiles, quads.tiles[mouse.i], 800, 600, 0, 4, 4, 32, 32)
 	
 	-- Cory's GUI Menu
 	if editor.menuopen then

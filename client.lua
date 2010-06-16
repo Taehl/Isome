@@ -40,7 +40,7 @@ function client.draw()
 	
 	--love.graphics.setColor(255, 255, 255, 255)
 	love.graphics.draw(terrain, -cam.x, -cam.y, 0, 1, 1, 0, 0)
-	if not drewcursor then editor.drawcursor() end
+	if not drewcursor and editor then editor.drawcursor() end
 	
 	-- player
 	local rx, ry = isogrid(player.z, player.x, player.y)
@@ -55,15 +55,16 @@ function client.unload()
 end
 
 function client.maketerrain()
+	-- WTF
 	terrain:clear()
 	for z, layer in kpairs(tiles) do
 		-- change color based on relative depth if viewing by layers
-		if editor then if editor.layerview then
-			if z < mouse.z then love.graphics.setColor(255, 127, 127, 255)
-			elseif z > mouse.z then love.graphics.setColor(127, 255, 127, 63)
-			else love.graphics.setColor(255, 255, 255, 255)
-			end
-		end end
+		--if editor then if editor.layerview then
+		--	if z < mouse.z then love.graphics.setColor(255, 127, 127, 255)
+		--	elseif z > mouse.z then love.graphics.setColor(127, 255, 127, 63)
+		--	else love.graphics.setColor(255, 255, 255, 255)
+		--	end
+		--end end
 		for x, row in kpairs(layer) do
 			for y, t in kpairs(row) do
 				
