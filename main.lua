@@ -18,11 +18,7 @@ function love.load()
 		return iter
 	end
 
-	graphics = { --tiles = {
-	--		love.graphics.newImage("tile1.png"),
-	--		love.graphics.newImage("tile2.png"),
-	--		love.graphics.newImage("tile3.png"),
-	--	},
+	graphics = { 
 		tiles = love.graphics.newImage("tiles.png"),
 		player = love.graphics.newImage("player.png"),
 	}
@@ -54,7 +50,9 @@ function love.keypressed(k)
 
 	if server then server.keypressed(k) end
 	
+	-- change this to opening a menu
 	if k == "escape" then love.event.push("q")
+	-- why does this crash??
 	elseif k == "r" then love.filesystem.load("main.lua")() love.load()
 	end
 	
@@ -84,7 +82,7 @@ end
 
 -- Convert grid coordinates to screen coordinates
 function isogrid(z, x, y)
-	return math.round(-x*15 + y*15), math.round(y*7 + x*7 - z*16)
+	return math.floor(-x*15 + y*15), math.floor(y*7 + x*7 - z*16)
 end
 
 -- Convert screen coordinates to grid coordinates

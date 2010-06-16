@@ -35,7 +35,7 @@ function editor.keypressed(k)
 		icony = love.mouse.getY()
 	end
 	-- "export" i/o code:
-	--file:write(Tserialize(tiles))
+	--file:write(TSerialize(tiles))
 	--tiles={} loadstring("tiles="..file:read())()
 end
 
@@ -68,10 +68,12 @@ function editor.update(dt)
 				if tiles[mouse.z][mouse.x][mouse.y].i == mouse.i then return end
 			end end end
 			newtile(mouse.z, mouse.x, mouse.y, mouse.i)
-		elseif love.mouse.isDown("r") then if tiles[mouse.z] then if tiles[mouse.z][mouse.x] then
-			tiles[mouse.z][mouse.x][mouse.y] = nil
-			if client then client.maketerrain() end
-		end end end
+		elseif love.mouse.isDown("r") then
+			if tiles[mouse.z] then if tiles[mouse.z][mouse.x] then if tiles[mouse.z][mouse.x][mouse.y] then
+				tiles[mouse.z][mouse.x][mouse.y] = nil
+				if client then client.maketerrain() end
+			end end end
+		end
 	end
 end
 

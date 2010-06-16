@@ -63,6 +63,7 @@ function client.maketerrain()
 		-- maybe have two terrains, one for equal and lower z, one for higher?
 		-- then you could turn the higher one transparent.
 		-- ... but that means you'd have to maketerrain every time you switch z...
+		-- maybe I could just temporarily switch over to using a limited-range draw(), instead...
 		if editor then if editor.layerview then
 			if z < mouse.z then love.graphics.setColor(255, 127, 127, 255)
 			elseif z > mouse.z then love.graphics.setColor(127, 255, 127, 63)

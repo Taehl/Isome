@@ -5,8 +5,8 @@ server = {}
 function server.load()
 	tiles = {}
 	
-	for x=0,200 do
-		for y=0,200 do
+	for x=1,200 do
+		for y=1,200 do
 			local i = math.max(math.random(-3,3), 1)
 			newtile(1, x, y, i, true)
 		end
