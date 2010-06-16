@@ -53,16 +53,23 @@ function client.unload()
 end
 
 function client.maketerrain()
-	-- WTF
+	-- todo: only make terrain near the camera.
+	-- WTF IS THIS BUG
 	terrain:clear()
 	for z, layer in kpairs(tiles) do
+	
 		-- change color based on relative depth if viewing by layers
-		--if editor then if editor.layerview then
-		--	if z < mouse.z then love.graphics.setColor(255, 127, 127, 255)
-		--	elseif z > mouse.z then love.graphics.setColor(127, 255, 127, 63)
-		--	else love.graphics.setColor(255, 255, 255, 255)
-		--	end
-		--end end
+		-- this doesn't work on spritebatches...
+		-- maybe have two terrains, one for equal and lower z, one for higher?
+		-- then you could turn the higher one transparent.
+		-- ... but that means you'd have to maketerrain every time you switch z...
+		if editor then if editor.layerview then
+			if z < mouse.z then love.graphics.setColor(255, 127, 127, 255)
+			elseif z > mouse.z then love.graphics.setColor(127, 255, 127, 63)
+			else love.graphics.setColor(255, 255, 255, 255)
+			end
+		end end
+		
 		for x, row in kpairs(layer) do
 			for y, t in kpairs(row) do
 				

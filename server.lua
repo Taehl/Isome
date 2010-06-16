@@ -5,19 +5,9 @@ server = {}
 function server.load()
 	tiles = {}
 	
-	-- make a little world
-	--[[
-	newtile(1, 11, 31, 1)
-	newtile(1, 12, 31, 1)
-	newtile(1, 13, 31, 1)
-	newtile(1, 13, 32, 1)
-	newtile(1, 13, 33, 1)
-	newtile(2, 13, 31, 2)
-	newtile(3, 13, 31, 2)
-	--]]
-	for x=0,20 do
-		for y=0,20 do
-			local i = math.random(2,3)
+	for x=0,200 do
+		for y=0,200 do
+			local i = math.max(math.random(-3,3), 1)
 			newtile(1, x, y, i, true)
 		end
 	end
@@ -41,6 +31,7 @@ end
 
 function server.unload()
 	-- save all connected players
+	-- tell clients to disconnect
 	
 	package.loaded.server = nil
 	server = nil
